@@ -9,6 +9,13 @@ public class App {
     public static void main(String[] args) {
         BoardGameDAO dao = new BoardGameDAO();
 
+        System.out.println("\n****************** Add Records ******************");
+        dao.create(new BoardGame("Settlers of Cataan","Acme",2010,4));
+        dao.create(new BoardGame("Memoir 44","Days",2012,2));
+        dao.create(new BoardGame("Monopoly","Acme",1960,4));
+        dao.create(new BoardGame("Ouija Board","Parker Bros",1972,666));
+        dao.create(new BoardGame("Sorry","Hasbro",1978,3));
+
         System.out.println("\n****************** All Records ******************");
         List<BoardGame> games = new ArrayList<BoardGame>(dao.findAll());
         for (BoardGame game : games) {
@@ -16,10 +23,10 @@ public class App {
         }
 
         System.out.println("\n***************** Record by Id *****************");
-        System.out.println(dao.findById(3));
+        System.out.println(dao.findById(games.get(2).getId()));
 
         System.out.println("\n******* Update Record (numPLayers +/- 1) *******");
-        BoardGame game = dao.findById(3);
+        BoardGame game = dao.findById(games.get(2).getId());
         int numP = game.getNumPlayers();
         game.setNumPlayers((numP%2 == 0) ? numP+1 : numP-1);
         System.out.println(dao.update(game));
@@ -34,6 +41,7 @@ public class App {
         games = new ArrayList<BoardGame>(dao.findAll());
         for (BoardGame g : games) {
             System.out.println(g);
+            dao.delete(g.getId());
         }
     }
 
